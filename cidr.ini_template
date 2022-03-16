@@ -1,0 +1,19 @@
+; Configure your cidrs here
+
+[ipv6]
+
+ipv6[] = "FFFF:FFFF:FFFF:FFF"
+ipv6[] = "FFFF:FFFF:FFFF:FFF"
+ipv6[] = "FFFF:FFFF:FFFF:FFF"
+
+
+[ipv4]
+ipv4[] = "255.255.255.255/0"
+ipv4[] = "255.255.255.255/0"
+ipv4[] = "255.255.255.255/0"
+
+; Configure additional options here
+[options]
+; on / off
+helper = off
+debug = on
