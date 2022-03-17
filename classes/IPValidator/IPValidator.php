@@ -18,6 +18,8 @@ class IPValidator
     private $uid; // Client Mellon UID
     private $displayName; // Client Mellon Display name
     private $debug; // Debug flag
+    private $logger;
+    private $logging;
 
     /**
      *
@@ -27,8 +29,10 @@ class IPValidator
      * @param $ipv4cidr
      * @param $ipv6cidr
      */
-    function __construct($debug, $helper, $ipv4cidr, $ipv6cidr)
+    function __construct($debug, $helper, $ipv4cidr, $ipv6cidr, $logger, $logging)
     {
+        $this->logging = $logging;
+        $this->logger = $logger;
         $this->debug = $debug;
         $this->uid = $_SERVER['MELLON_uid'];
         $this->displayName = $_SERVER['MELLON_displayName'];
@@ -75,7 +79,7 @@ class IPValidator
     }
 
     /**
-     * Check if user is on eduroam or not and reutnr value or print out a message
+     * Check if user is on eduroam or not and return value or print out a message
      * @return bool|void
      */
     public function checkIfUserIsOnEduroam()
@@ -103,7 +107,11 @@ class IPValidator
 
         // If user is on eduroam greet them if not tell them they are not
         // If helper is true just return True / False
+        // If logging is true log to full.log user visit and result
         if ($this->isOnEduroam) {
+            if ($this->logging) {
+                $this->logger->msg("Successfully Identified: " . $this->remote . " uid: " . $this->uid . " as eduroam user");
+            }
             if (!$this->helper) {
                 echo "<h1>Hello " . $this->displayName . " uid: " . $this->uid . "</h1>";
                 echo nl2br("\r\n<h2>You are on eduroam</h2");
@@ -113,6 +121,10 @@ class IPValidator
             }
 
         } else {
+            if ($this->logging) {
+                $this->logger->msg("Failed to identify " . $this->remote . " as " . $this->uid . " as eduroam user");
+            }
+
             if (!$this->helper) {
                 echo nl2br("<h2>You are not on eduroam</h2>");
             } else {
@@ -163,9 +175,17 @@ class IPValidator
         return $ips;
     }
 
-    public function checkIfUserIsRegistered($uid,$course,$attendance){
-        foreach($attendance as $att){
-            if(date("Y-m-d",strtotime($att['date'])) === date("Y-m-d") && $att['uid'] === $uid && $att['course'] ===$course ){
+    /**
+     * Check if user has already registered for the lecture
+     * @param $uid
+     * @param $course
+     * @param $attendance
+     * @return false|mixed
+     */
+    public function checkIfUserIsRegistered($uid, $course, $attendance)
+    {
+        foreach ($attendance as $att) {
+            if (date("Y-m-d", strtotime($att['date'])) === date("Y-m-d") && $att['uid'] === $uid && $att['course'] === $course) {
                 return $att;
             }
         }

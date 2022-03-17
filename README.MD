@@ -11,8 +11,9 @@
 2. Enter the CIDR:s you want to allow in the cidr.ini 
 3. Configure your log files
 4. Configure either as a helper class or as a direct output for testing purposes
-5. !IMPORTANT! Be sure to chmod your log files to 666 otherwise PHP will not be able to write the log
-6. Set debug flag
+5. Configure COURSES in cidr.ini with the courses you want to allow. Course ID without "-" as id and Course name a string in data.
+6. !IMPORTANT! Be sure to chmod your log files to 666 otherwise PHP will not be able to write the log
+7. Set debug flag to true if you want to show users ip address and type
 
 Intended use is to use this as a helper class for a webpage that you want to filter by users location.
 Fairly easy to copy the ipValidator class and use the provided index.php as a template for your own project.
