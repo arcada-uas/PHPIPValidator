@@ -17,5 +17,6 @@
 Intended use is to use this as a helper class for a webpage that you want to filter by users location.
 Fairly easy to copy the ipValidator class and use the provided index.php as a template for your own project.
 
+To log attendance for a certain course create a new link with index.php?course=COURSENAMEORID
 
 Code by Johannes Edgren (2022). 
