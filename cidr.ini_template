@@ -1,5 +1,9 @@
 ; Configure your cidrs here
 
+[logger]
+
+logfile = "/log/full.log"
+
 [ipv6]
 
 ipv6[] = "FFFF:FFFF:FFFF:FFF"

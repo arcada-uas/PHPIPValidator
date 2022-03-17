@@ -4,6 +4,7 @@
  * Class for validating remote ip
  */
 
+namespace IPValidator;
 class ipValidator
 {
     private $ipv4; // Array to keep all generated ipv4s
@@ -105,7 +106,7 @@ class ipValidator
         if ($this->isOnEduroam) {
             if (!$this->helper) {
                 echo "<h1>Hello " . $this->displayName . " uid: " . $this->uid . "</h1>";
-                echo nl2br("\r\n<button>Press here to register for kursen XYZ</button");
+                echo nl2br("\r\n<h2>You are on eduroam</h2");
                 echo nl2br("\r\n");
             } else {
                 return true;
@@ -113,7 +114,7 @@ class ipValidator
 
         } else {
             if (!$this->helper) {
-                echo nl2br("You are not on eduroam");
+                echo nl2br("<h2>You are not on eduroam</h2>");
             } else {
                 return false;
             }
