@@ -11,20 +11,26 @@
  */
 
 // Require the ipValidator class
-require "ipValidator.php";
+use IPValidator\ipValidator;
+use IPValidator\Logger;
+
 
 // Read config file
 $config = parse_ini_file("cidr.ini");
 
 $ipValidator = new ipValidator($config['debug'], $config['helper'], $config['ipv4'], $config['ipv6']);
-$ipState = $ipValidator->checkIfUserIsOnEduroam();
+$logger = new Logger($config['logfile']);
+$attendance = new Logger($config['attendanceLog']);
 
-if($config['helper'] && $ipState){
+$template['validation'] = $ipValidator->checkIfUserIsOnEduroam();
+$template['course'] = $_GET['courseID'];
+
+if ($config['helper'] && $template['validation']) {
     // Do stuff here if you have set the type to helper class and the ip validates correctly
 
-    echo "I like marbles";
-}else{
+    require "template.php";
+} else {
     // Do evil stuff here if user is a skurk
 
-    echo "You are not welcome here";
+    echo "<h1>You are not welcome here</h1>";
 }
