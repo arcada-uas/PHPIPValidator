@@ -162,4 +162,13 @@ class IPValidator
         }
         return $ips;
     }
+
+    public function checkIfUserIsRegistered($uid,$course,$attendance){
+        foreach($attendance as $att){
+            if(date("Y-m-d",strtotime($att['date'])) === date("Y-m-d") && $att['uid'] === $uid && $att['course'] ===$course ){
+                return $att;
+            }
+        }
+        return false;
+    }
 }

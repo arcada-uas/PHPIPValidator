@@ -11,24 +11,38 @@
  */
 
 // Require the ipValidator class
-use IPValidator\ipValidator;
+use IPValidator\IPValidator;
 use IPValidator\Logger;
 use IPValidator\ReadCSV;
 
+require "config.php";
 
 // Read config file
-$config = parse_ini_file("/config/cidr.ini");
+$config = parse_ini_file(CONFIG_FILE);
 
-$ipValidator = new ipValidator($config['debug'], $config['helper'], $config['ipv4'], $config['ipv6']);
+$ipValidator = new IPValidator($config['debug'], $config['helper'], $config['ipv4'], $config['ipv6']);
 $logger = new Logger($config['logfile']);
 $attendanceLogger = new Logger($config['attendanceLog']);
 $readCSV = new ReadCSV($config['attendanceLog']);
 $template['validation'] = $ipValidator->checkIfUserIsOnEduroam();
-$template['course'] = $_GET['courseID'];
+$template['course'] = $_GET['course'];
 $template['attendanceData'] = $readCSV->getCSV();
+$template['uid'] = $_SERVER['MELLON_uid'];
+$template['displayName'] = $_SERVER['MELLON_displayName'];
 if ($config['helper'] && $template['validation']) {
     // Do stuff here if you have set the type to helper class and the ip validates correctly
 
+    // Check visitors register status and save the array result if one exists
+    $template['isRegistered'] = $ipValidator->checkIfUserIsRegistered($template['uid'],$template['course'], $template['attendanceData']);
+
+    // If user presses register
+    if(isset($_POST['submitAttendance'])){
+        // Check that user isn't registered before sending a new registrar
+        if(!$template['isRegistered']) {
+            $attendanceLogger->registerAttendance($template['uid'], $template['displayName'], $template['course']);
+            header("Refresh: 0");
+        }
+    }
     require "template.php";
     var_dump($template['attendanceData']);
 } else {

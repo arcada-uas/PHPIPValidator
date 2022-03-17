@@ -34,12 +34,11 @@ class Logger
     function registerAttendance($uid,$displayName,$course){
         if(strpos($this->fileName, "attendance")){
             $d = date("Y-m-d H:i:s");
-            fwrite($this->fh, $d . "," . "$uid" . ",". $displayName . "$course" ."\n");
+            fwrite($this->fh, $d . "," . "$uid" . ",". $displayName .",". "$course" ."\n");
         }else{
             $this->msg("Wrong log for operation");
         }
     }
-
 }
 
 

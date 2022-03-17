@@ -2,7 +2,8 @@
 
 [logger]
 
-logfile = "/log/full.log"
+logfile = "../log/full.log"
+attendanceLog = "../log/attendance.log"
 
 [ipv6]
 
@@ -19,5 +20,5 @@ ipv4[] = "255.255.255.255/0"
 ; Configure additional options here
 [options]
 ; on / off
-helper = off
+helper = on
 debug = on
