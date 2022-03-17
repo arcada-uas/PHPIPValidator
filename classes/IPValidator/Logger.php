@@ -14,9 +14,10 @@ class Logger
      * @var false|resource
      */
     private $attendance;
-
+    private $fileName;
     function __construct($file)
     {
+        $this->fileName = $file;
         $this->fh = fopen($file, "a") or die("Unable to open: " . $file);
     }
 
@@ -31,11 +32,12 @@ class Logger
     }
 
     function registerAttendance($uid,$displayName,$course){
-        $file = "../log/attendance.log";
-        $this->attendance = fopen($file, "a") or die($this->msg("Unable to open: " . $file  ) && "Unable to open file");
-        $d = date("Y-m-d H:i:s");
-
-        fwrite($this->attendance, $d . ";" . "$uid" . ";". $displayName . "$course" .";");
+        if(strpos($this->fileName, "attendance")){
+            $d = date("Y-m-d H:i:s");
+            fwrite($this->fh, $d . "," . "$uid" . ",". $displayName . "$course" ."\n");
+        }else{
+            $this->msg("Wrong log for operation");
+        }
     }
 
 }

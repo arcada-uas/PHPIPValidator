@@ -13,22 +13,24 @@
 // Require the ipValidator class
 use IPValidator\ipValidator;
 use IPValidator\Logger;
+use IPValidator\ReadCSV;
 
 
 // Read config file
-$config = parse_ini_file("cidr.ini");
+$config = parse_ini_file("/config/cidr.ini");
 
 $ipValidator = new ipValidator($config['debug'], $config['helper'], $config['ipv4'], $config['ipv6']);
 $logger = new Logger($config['logfile']);
-$attendance = new Logger($config['attendanceLog']);
-
+$attendanceLogger = new Logger($config['attendanceLog']);
+$readCSV = new ReadCSV($config['attendanceLog']);
 $template['validation'] = $ipValidator->checkIfUserIsOnEduroam();
 $template['course'] = $_GET['courseID'];
-
+$template['attendanceData'] = $readCSV->getCSV();
 if ($config['helper'] && $template['validation']) {
     // Do stuff here if you have set the type to helper class and the ip validates correctly
 
     require "template.php";
+    var_dump($template['attendanceData']);
 } else {
     // Do evil stuff here if user is a skurk
 

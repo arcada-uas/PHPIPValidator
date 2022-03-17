@@ -5,7 +5,7 @@
  */
 
 namespace IPValidator;
-class ipValidator
+class IPValidator
 {
     private $ipv4; // Array to keep all generated ipv4s
     private $ipv6; // Array to keep all generated ipv6s (Not used for now)

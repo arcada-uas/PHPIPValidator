@@ -24,5 +24,6 @@
 <?php
 
 if(isset($_POST['submitAttendance'])){
+    $logger->registerAttendance($_SERVER['MELLON_uid'], $_SERVER['MELLON_displayName'], $template['courseID']);
 
 }
