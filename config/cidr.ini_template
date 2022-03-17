@@ -5,6 +5,12 @@
 logfile = "../log/full.log"
 attendanceLog = "../log/attendance.log"
 
+[courses]
+; add course id without "-" as array key for each course you want to allow and name a string
+courses[""] = "COURSE NAME"
+courses[""] = "COURSE 2 NAME"
+
+
 [ipv6]
 
 ipv6[] = "FFFF:FFFF:FFFF:FFF"
@@ -20,5 +26,7 @@ ipv4[] = "255.255.255.255/0"
 ; Configure additional options here
 [options]
 ; on / off
+; logging on enables a log output to full.log for all site visits. 
 helper = on
-debug = on
+debug = off
+logging = on
