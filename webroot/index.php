@@ -46,20 +46,22 @@ $template['attendanceData'] = $readCSV->getCSV();
 $template['uid'] = $_SERVER['MELLON_uid'];
 $template['displayName'] = $_SERVER['MELLON_displayName'];
 
+
 /**
  * Main functionality input.
  * If config is se to helper, ip validation passes and input course key exists proceed
  */
+
 if ($config['helper'] && $template['validation'] && array_key_exists($template['course'], $template['courses'])) {
     // Do stuff here if you have set the type to helper class and the ip validates correctly
 
     // Check visitors register status and save the array result if one exists
-    $template['isRegistered'] = $ipValidator->checkIfUserIsRegistered($template['uid'],$template['course'], $template['attendanceData']);
+    $template['isRegistered'] = $ipValidator->checkIfUserIsRegistered($template['uid'], $template['course'], $template['attendanceData']);
 
     // If user presses register
-    if(isset($_POST['submitAttendance'])){
+    if (isset($_POST['submitAttendance'])) {
         // Check that user isn't registered before sending a new registrar
-        if(!$template['isRegistered']) {
+        if (!$template['isRegistered']) {
             $attendanceLogger->registerAttendance($template['uid'], $template['displayName'], $template['course']);
             header("Refresh: 0");
         }
@@ -67,6 +69,7 @@ if ($config['helper'] && $template['validation'] && array_key_exists($template['
     /**
      * Require template.php that builds the page
      */
+
     require "template.php";
 } else {
     // Do evil stuff here if user is a skurk

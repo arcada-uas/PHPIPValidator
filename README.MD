@@ -6,7 +6,15 @@
 * Written and tested on PHP 7.4. 
 * Mellon auth is required.
 
-#### SETUP
+
+### AUTO SETUP
+
+This packages comes bundled with an automatic installer, the automatic installer can be ran with ./install.sh 
+With the automatic installer you can add courses and do all necessary linking and chmoding to be compatible with running this 
+project on cgi.arcada.fi
+
+
+### MANUAL SETUP
 1. To use this project make a copy of cidr.ini_template named cidr.ini
 2. Enter the CIDR:s you want to allow in the cidr.ini 
 3. Configure your log files

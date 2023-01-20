@@ -1,4 +1,5 @@
 <html lang="en">
+<title>Arcada Attendance Registration <?=$template['course']?></title>
 <link rel="stylesheet" href="./media/style.css" type="text/css">
 <body>
 
